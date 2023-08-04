@@ -94,7 +94,7 @@ class mailPacientesController extends Controller
                 ->first();
         
             if ($registro) {
-                $cop = $registro->numero_documento_paciente_odontologo;
+                $cop = $registro->correo;
                 $numero_documento_paciente_odontologo = $registro->numero_documento_paciente_odontologo;
             } else {
                 $cop = null;

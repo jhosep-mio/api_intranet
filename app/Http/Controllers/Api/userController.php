@@ -152,12 +152,11 @@ class userController extends Controller
             "password" => "required"
         ]);
 
-        $user = pacientes::where("numero_documento_paciente_odontologo", "=", $request->user)->first();
+        $user = pacientes::where("correo", "=", $request->user)->where('numero_documento_paciente_odontologo', '=', $request->password)->first();
 
-        $odontologo = odontologos::where("correo", "=", $request->user)->first();
+        $odontologo = odontologos::where("correo", "=", $request->user)->where('cop', '=', $request->password)->first();
 
         if(isset($odontologo) ){
-            if(($request->password == $odontologo->cop)){
                 //CREAMOS EL TOKEN
                $token = $odontologo->createToken("auth_token")->plainTextToken;
                 return response()->json([
@@ -166,16 +165,8 @@ class userController extends Controller
                     "acces_token" => $token,
                     "user" => $odontologo 
                 ]);
-                //SI TODO ESTA CORRECTO
-            }else{
-                return response()->json([
-                    "status" => "invalid",
-                    "message" => "La contraseña es incorrecta"
-                ]);
-            }
         }else if(isset($user->id)){
-            if(($request->password == $user->numero_documento_paciente_odontologo)){
-                //CREAMOS EL TOKEN
+          
                $token = $user->createToken("auth_token")->plainTextToken;
                 return response()->json([
                     "status" => "success",
@@ -183,13 +174,6 @@ class userController extends Controller
                     "acces_token" => $token,
                     "user" => $user 
                 ]);
-                //SI TODO ESTA CORRECTO
-            }else{
-                return response()->json([
-                    "status" => "invalid",
-                    "message" => "La contraseña es incorrecta"
-                ]);
-            }
         }else{
             return response()->json([
                 "status" => "error",
