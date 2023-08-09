@@ -95,7 +95,7 @@ class archivosController extends Controller
         $zip->open($zipName, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
 
         // Agregar carpeta de imágenes al archivo ZIP
-        $imagenesFolder = 'Imagenes';
+        $imagenesFolder = 'Imágenes';
         $zip->addEmptyDir($imagenesFolder);
         $archivosNames = []; // Para almacenar los nombres de los archivos y evitar duplicados
         foreach ($archivos as $archivo) {

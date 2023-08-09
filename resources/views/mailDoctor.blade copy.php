@@ -95,7 +95,7 @@
     </div>
     <div class="cuerpo">
         <div class="info">
-            <p>Estimado Sr(a). {{$name}}</p>
+            <p>Estimado(a) Sr(a). {{$name}}</p>
             <br/>
             <p>En Radiología Dental Los Olivos nos complace informarle que sus resultados ya están disponibles. Le invitamos a acceder a nuestro sistema utilizando el siguiente <a href="https://radiologiadental.opticasintegra.com/resultados">link</a></p>
             <br/>
