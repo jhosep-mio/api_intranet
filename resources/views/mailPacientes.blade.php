@@ -94,14 +94,14 @@
         </div>
 
         <div class="title">
-            <h1>¡CODIGO DE VERIFICACION!</h1>
+            <h1>¡CÓDIGO DE VERIFICACIÓN!</h1>
         </div>
     </div>
     <div class="separator">
     </div>
     <div class="cuerpo">
         <div class="info">
-            <p>Recientemente se uso este correo electronico para registrar una cuenta en Raddiologia dental. Puedes usar el siguiente codigo para confirmar tu registro.</p>
+            <p>Recientemente se usó este correo electrónico para registrar una cuenta en el sistema de Resultados en Línea de Radiología Dental Avanzada. Puedes usar el siguiente código para confirmar tu registro.</p>
             <p class="color_button">{{$codigo}}</p>
         </div>
   
