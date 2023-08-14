@@ -93,13 +93,14 @@ class archivosController extends Controller
         $zipName = 'archivos.zip';
         $zip = new \ZipArchive();
         $zip->open($zipName, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
-
+        $totalSize = 0;
         // Agregar carpeta de imágenes al archivo ZIP
         $imagenesFolder = 'Imágenes';
         $zip->addEmptyDir($imagenesFolder);
         $archivosNames = []; // Para almacenar los nombres de los archivos y evitar duplicados
         foreach ($archivos as $archivo) {
             $rutaArchivo = public_path('imagenes/' . $archivo->archivo);
+            $totalSize += filesize($rutaArchivo);
             $nombreArchivo = substr($archivo->archivo, strpos($archivo->archivo, '_') + 1);
 
             // Verificar si el nombre del archivo ya existe, si es así, agregar un sufijo numérico
@@ -121,6 +122,7 @@ class archivosController extends Controller
         $informesNames = []; // Para almacenar los nombres de los informes y evitar duplicados
         foreach ($informes as $informe) {
             $rutaInforme = public_path('informes/' . $informe->informe);
+            $totalSize += filesize($rutaArchivo);
             $nombreInforme = substr($informe->informe, strpos($informe->informe, '_') + 1);
 
             // Verificar si el nombre del informe ya existe, si es así, agregar un sufijo numérico
@@ -138,7 +140,9 @@ class archivosController extends Controller
 
         $zip->close();
 
-        return response()->download($zipName)->deleteFileAfterSend(true);
+        return response()->download($zipName, null, [
+            'Content-Length' => $totalSize, // Pasar el tamaño total como parte de la respuesta
+        ])->deleteFileAfterSend(true);
     }
 
 
