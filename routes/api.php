@@ -91,15 +91,15 @@ Route::group(['middleware' => ['auth:sanctum', 'role:99,98']], function () {
         //AMBOS
         Route::controller(OrdenesController::class)->group(function(){
             Route::get('/allOrdenVirtuales','index');
-
             Route::get('/allOrdenesPerMes','indexPerMes');
-
             Route::post('/buscarOrdenes','buscar');
             Route::post('/buscarOrdenesPerFecha','buscarFechas');
             Route::post('/getCreados','buscarCreaadoswhereFechas');
             Route::post('/buscarCreaados','buscarCreaados');
             Route::post('/reporteOrdenes','indexReporte');
             Route::put('/updateOrdenFactura/{id}','updateFactura'); 
+            Route::put('/updateNewToModifcate/{id}','updateUserToModificate'); 
+
             Route::delete('/deleteOrdenVirtual/{id}','destroy');
         });
         //AMBOS
@@ -147,6 +147,11 @@ Route::group(['middleware' => ['auth:sanctum', 'role:99,98']], function () {
             Route::get('/oneFactura/{id}','show');
             Route::put('/updateFactura/{id}','update');
         });
+
+        Route::controller(userController::class)->group(function(){
+            // SOLO ADMINDISTRADOR
+            Route::get('/getUsuarios','index');
+        });
 });
 
 Route::group(['middleware' => ["auth:sanctum", 'role: 0']], function () {
@@ -162,7 +167,6 @@ Route::group(['middleware' => ["auth:sanctum", 'role: 1']], function () {
 Route::group(['middleware' => ['auth:sanctum', 'role:99']], function () {
     Route::controller(userController::class)->group(function(){
         // SOLO ADMINDISTRADOR
-        Route::get('/getUsuarios','index');
         Route::get('/getUsuario/{id}','show');
         Route::post('/registerUsersAdmins','register');
         Route::put('/updateUser/{id}','update');

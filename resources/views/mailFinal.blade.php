@@ -32,24 +32,17 @@
             width: 100%;
         }
         .cuerpo div {
-            width: fit-content;
-            display: flex;
-            flex-direction: column;
-            margin-top: 40px;
+            width: 100%;
+            display: inline-block;
+            margin-bottom: 40px;
         }
 
-        .text_sub{
-            margin-top: 30px !important;
-        }
         .info {
-            /* width: 50%; */
-            margin: 0 auto;
+            width: 50%;
         }
 
         .info p {
             font-size: 18px;
-            margin: 0;
-            padding: 0;
         }
 
         .img2 {
@@ -108,9 +101,9 @@
     </div>
     <div class="cuerpo">
         <div class="info">
-            <p class="">Su usuario fue creado correctamente, sus credenciales para iniciar sesion son los siguientes.</p>
-            <p class="color_button text_sub">Usuario: asdasd</p>
-            <p class="color_button">Contraseña:  asd </p>
+            <p class="">Su usuario fue creado correctamente, sus credenciales para iniciar sesión son los siguientes: </p>
+            <p class="color_button">Usuario: {{$cop}}</p>
+            <p class="color_button">Contraseña: {{$numero_documento_paciente_odontologo}}</p>
         </div>
     </div>
 </body>

@@ -247,8 +247,6 @@ class OrdenesController extends Controller
     }
 
 
-
-
     public function indexDoctores($id)
     {
         $ordenes = ordenes::join('pacientes', 'ordenes.id_paciente', '=', 'pacientes.id')
@@ -545,6 +543,28 @@ class OrdenesController extends Controller
         $updateOrdenVirtual->estado = $validatedData['estado'];
         $updateOrdenVirtual->activeComision = $validatedData['activeComision'];
 
+        $result = $updateOrdenVirtual->save();
+        if ($result) {
+            return response()->json(['status' => "success"]);
+        } else {
+            return response()->json(['status' => "error"]);
+        }
+    }
+
+    public function updateUserToModificate(Request $request, $id)
+    {
+
+        $updateOrdenVirtual = ordenes::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'id_modificacion' => 'required',
+        ]);
+
+        $validatedData = array_map(function ($value) {
+            return $value === 'null' ? null : $value;
+        }, $validatedData);
+
+        $updateOrdenVirtual->id_modificacion = $validatedData['id_modificacion'];
         $result = $updateOrdenVirtual->save();
         if ($result) {
             return response()->json(['status' => "success"]);

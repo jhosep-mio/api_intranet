@@ -101,7 +101,7 @@
     </div>
     <div class="cuerpo">
         <div class="info">
-            <p>Recientemente se usó este correo electrónico para registrar una cuenta en el sistema de Resultados en Línea de Radiología Dental Avanzada. Puedes usar el siguiente código para confirmar tu registro.</p>
+            <p>Recientemente se usó este correo electrónico para registrar una cuenta en el sistema de Resultados en Línea de Radiología Dental Avanzada. Puedes usar el siguiente código para confirmar tu registro:</p>
             <p class="color_button">{{$codigo}}</p>
         </div>
   

@@ -33,7 +33,7 @@ class NotificationPacientes extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Codigo de confirmacion',
+            subject: 'Código de confirmación',
         );
     }
 

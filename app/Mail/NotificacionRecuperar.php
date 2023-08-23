@@ -34,7 +34,7 @@ class NotificacionRecuperar extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'RECUPERAR CUENTTA',
+            subject: 'RECUPERACIÓN DE CUENTA',
         );
     }
 

@@ -89,19 +89,19 @@
 
 <body>
     <div class="ctn1">
-        <div class="img1">
-            <img src="https://logosperu.com/mails/logo_color.png">
+        <a href='https://radiologiadental.logosperu.com/' class="img1">
+            <img src="https://logosperu.com/mails/logo_color.png" alt='Radiología Dental Avanzada' style="pointer-events: none">
         </div>
 
         <div class="title">
-            <h1>¡RECUPERAR CUENTA!</h1>
+            <h1>¡RECUPERACIÓN DE CUENTA!</h1>
         </div>
     </div>
     <div class="separator">
     </div>
     <div class="cuerpo">
         <div class="info">
-            <p>Sus credenciales para iniciar sesion son los siguientes.</p>
+            <p>Sus credenciales para iniciar sesión son los siguientes: </p>
             <p class="color_button">Usuario: {{$cop}}</p>
             <p class="color_button">Contraseña: {{$numero_documento_paciente_odontologo}}</p>
         </div>
