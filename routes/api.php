@@ -40,6 +40,7 @@ Route::middleware('auth:sanctum')->put('/updateOrdenVirtual/{id}', [OrdenesContr
 Route::middleware('auth:sanctum')->post('verificarOrden', [OrdenesController::class, 'verificacion']);
 // DESCARGA DE ARCHIVOS E INFORMES
 Route::middleware('auth:sanctum')->get('/dowloads/{id}', [archivosController::class, 'getImagenes']);
+Route::middleware('auth:sanctum')->get('/getsize/{id}', [archivosController::class, 'getZipSize']);
 Route::middleware('auth:sanctum')->post('dowloadsGroup', [archivosController::class, 'getImagenesGroupServices']);
 Route::middleware('auth:sanctum')->post('dowloadsGroupInformes', [informesController::class, 'getImagenesGroupServicesInformes']);
 Route::middleware('auth:sanctum')->get('verInformes', [informesController::class, 'index']);

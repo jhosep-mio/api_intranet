@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Events\ProgressEvent; // Importa el evento ProgressEvent
 
 class archivosController extends Controller
 {
@@ -93,11 +94,15 @@ class archivosController extends Controller
         $zipName = 'archivos.zip';
         $zip = new \ZipArchive();
         $zip->open($zipName, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
-        $totalSize = 0;
         // Agregar carpeta de imágenes al archivo ZIP
         $imagenesFolder = 'Imágenes';
         $zip->addEmptyDir($imagenesFolder);
         $archivosNames = []; // Para almacenar los nombres de los archivos y evitar duplicados
+
+        $currentFile = 0;
+        $totalSize = 0;
+        $totalFiles = count($archivos) + count($informes);
+    
         foreach ($archivos as $archivo) {
             $rutaArchivo = public_path('imagenes/' . $archivo->archivo);
             $totalSize += filesize($rutaArchivo);
@@ -113,6 +118,10 @@ class archivosController extends Controller
             }
             $archivosNames[] = $nombreArchivo;
 
+            $currentFile++;
+            $progress = round(($currentFile / $totalFiles) * 100);
+            event(new ProgressEvent($progress, 100));
+
             $zip->addFile($rutaArchivo, $imagenesFolder . '/' . $nombreArchivo);
         }
 
@@ -122,7 +131,7 @@ class archivosController extends Controller
         $informesNames = []; // Para almacenar los nombres de los informes y evitar duplicados
         foreach ($informes as $informe) {
             $rutaInforme = public_path('informes/' . $informe->informe);
-            $totalSize += filesize($rutaArchivo);
+            $totalSize += filesize($rutaInforme);
             $nombreInforme = substr($informe->informe, strpos($informe->informe, '_') + 1);
 
             // Verificar si el nombre del informe ya existe, si es así, agregar un sufijo numérico
@@ -135,17 +144,40 @@ class archivosController extends Controller
             }
             $informesNames[] = $nombreInforme;
 
+            $currentFile++;
+            $progress = round(($currentFile / $totalFiles) * 100);
+            event(new ProgressEvent($progress, 100));
+
             $zip->addFile($rutaInforme, $informesFolder . '/' . $nombreInforme);
         }
 
         $zip->close();
 
         return response()->download($zipName, null, [
-            'Content-Length' => $totalSize, // Pasar el tamaño total como parte de la respuesta
+            'Content-Length' => $totalSize,
         ])->deleteFileAfterSend(true);
     }
 
 
+    public function getZipSize($id)
+    {
+        $archivos = archivos::where('id_orden', $id)->get();
+        $informes = informes::where('id_orden', $id)->get();
+
+        $totalSize = 0;
+    
+        foreach ($archivos as $archivo) {
+            $rutaArchivo = public_path('imagenes/' . $archivo->archivo);
+            $totalSize += filesize($rutaArchivo);
+        }
+
+        foreach ($informes as $informe) {
+            $rutaInforme = public_path('informes/' . $informe->informe);
+            $totalSize += filesize($rutaInforme);
+        }
+        return response()->json(['size' => $totalSize]);
+    }
+    
     public function destroyAll($id)
     {
         $verArchivo = archivos::where('id_orden', $id)->pluck('archivo');
